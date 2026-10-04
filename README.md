@@ -1,4 +1,5 @@
 # Bangla News 24
+Developed By Ismail Hasan Takid
 
 A modern Bengali news website built with **Next.js** and **Tailwind CSS**. It shows the latest news, categories, most-read stories and full article pages using a public news API.
 
