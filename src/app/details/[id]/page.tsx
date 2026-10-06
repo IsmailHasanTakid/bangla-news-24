@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { getData } from "@/lib/getData";
 import { recordRead } from "@/lib/history";
@@ -71,7 +71,7 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
         const news = allNews.find((n) => n.id === id);
 
         if (!news) {
-            return <p className="p-5">এই খবরটি পাওয়া যায়নি।</p>;
+            notFound();
         }
 
         // পড়ার history-তে জমা

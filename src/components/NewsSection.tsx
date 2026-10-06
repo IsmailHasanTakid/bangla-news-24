@@ -58,7 +58,6 @@ const NewsSection = async () => {
                         <span className="h-px flex-1 bg-gradient-to-r from-red-200 via-gray-200 to-transparent" />
                     </div>
 
-                    {/* Card grid */}
                     <div className="grid grid-cols-3 gap-6 mt-6">
                         {n.articles.map((news) => (
                             <div key={news.id}>
@@ -87,7 +86,6 @@ const NewsSection = async () => {
                                         </span>
                                     </div>
 
-                                    {/* Content */}
                                     <div className="flex flex-1 flex-col gap-3 p-5">
 
                                         <h2 className="line-clamp-2 text-lg font-extrabold leading-snug text-gray-900 transition-colors duration-300 group-hover:text-red-600">
@@ -98,7 +96,6 @@ const NewsSection = async () => {
                                             {news.description}
                                         </p>
 
-                                        {/* Footer */}
                                         <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-4">
                                             <span className="text-xs text-gray-400">
                                                 {news.firstPublished
@@ -118,7 +115,6 @@ const NewsSection = async () => {
 
                                     </div>
 
-                                    {/* Bottom red line (grows on hover) */}
                                     <span className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-red-500 to-rose-700 transition-all duration-500 group-hover:w-full" />
 
                                 </Link>

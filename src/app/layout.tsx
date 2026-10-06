@@ -6,6 +6,7 @@ import Header from "@/components/header";
 import Navbar from "@/components/Navbar";
 import Marquie from "@/components/Marquie";
 import Footer from "@/components/Footer";
+import ShowOnlyHomeMarquie from "@/components/ShowOnlyHomeMarquie.tsx";
 
 const notoSerifBengali = Noto_Serif_Bengali({
   variable: "--font-geist-sans",
@@ -37,11 +38,11 @@ export default function RootLayout({
           <Navbar />
         </HideOnDetails>
 
-        <HideOnDetails>
+        <ShowOnlyHomeMarquie>
           <Marquie />
-        </HideOnDetails>
+        </ShowOnlyHomeMarquie>
 
-        <main className="w-full pt-8">
+        <main className="w-full flex-1 pt-8">
           {children}
         </main>
 

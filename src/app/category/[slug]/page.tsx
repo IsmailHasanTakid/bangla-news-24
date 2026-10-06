@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getData } from "@/lib/getData";
+import { notFound } from "next/navigation";
 
 interface CategoryNews {
     id: string;
@@ -29,12 +30,8 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
     // Empty list if the API failed
     const NewsData: CategoryNews[] = data?.data ?? [];
 
-    if (NewsData.length === 0) {
-        return (
-            <p className="p-10 text-center text-gray-500">
-                এই বিভাগে কোনো খবর পাওয়া যায়নি।
-            </p>
-        );
+    if (!NewsData) {
+        notFound();
     }
 
     return (

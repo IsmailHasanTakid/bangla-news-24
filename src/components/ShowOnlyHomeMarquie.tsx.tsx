@@ -2,14 +2,14 @@
 
 import { usePathname } from "next/navigation";
 
-const HideOnDetails = ({ children }: { children: React.ReactNode }) => {
+const ShowOnlyHomeMarquie = ({ children }: { children: React.ReactNode }) => {
     const pathname = usePathname();
 
-    if (pathname === "/profile") {
+    if (pathname !== "/") {
         return null;
     }
 
     return <>{children}</>;
 };
 
-export default HideOnDetails;
+export default ShowOnlyHomeMarquie;

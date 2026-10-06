@@ -9,7 +9,7 @@ export type HistoryItem = {
     readAt: Date;
 };
 
-// কেউ details পেজ খুললে এটা চলবে। আবার পড়লে নতুন entry না হয়ে সময় আপডেট হবে।
+
 export async function recordRead(params: {
     userId: string;
     newsId: string;
