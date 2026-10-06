@@ -24,15 +24,32 @@ const Header = () => {
                             />
                         </div>
 
-                        <div>
-                            <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-gray-900">
-                                Bangla News <span className="text-red-500">24</span>
-                            </h1>
 
-                            <p className="text-xs md:text-sm text-gray-500 mt-1 font-medium">
-                                {date}
-                            </p>
+                        <div className="group">
+                            <div className="flex items-baseline gap-2">
+                                <h1 className="text-xl font-black tracking-tight text-gray-950 md:text-2xl">
+                                    Barta
+                                    <span className="ml-0.5 bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
+                                        24
+                                    </span>
+                                </h1>
+
+                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 md:text-xs">
+                                    by Takid
+                                </span>
+                            </div>
+
+                            <div className="mt-1 flex items-center gap-2">
+                                <span className="h-px w-5 bg-red-500" />
+
+                                <p className="text-[11px] font-medium tracking-wide text-gray-500 md:text-xs">
+                                    খবরের সাথে, সবসময়
+                                </p>
+                            </div>
                         </div>
+        
+
+
                     </div>
 
                 </div>
