@@ -1,116 +1,328 @@
-# Bangla News 24
-Developed By Ismail Hasan Takid
+# Barta24 BY TAKID
+Developed by Ismail Hasan Takid
 
-A modern Bengali news website built with **Next.js** and **Tailwind CSS**. It shows the latest news, categories, most-read stories and full article pages using a public news API.
+**Barta24 BY TAKID** is a modern Bengali news website built with Next.js.
+It provides users with Bengali news, categories, article details, authentication, Google login, user profiles, and reading history.
 
-## Features
+> **খবরের সাথে, সবসময়**
 
-- Home page with a top story, main news list and most-read section
-- Scrolling "latest news" ticker (marquee)
-- Sticky navigation bar with an active link highlight
-- Category pages with a responsive news grid
-- Article details page with text, sub-headings, images and captions
-- Fallback view when the full article is not available
-- Safe data fetching: the site does not crash if the API fails
-- Bengali fonts (Noto Serif Bengali) and Bengali date/number formatting
-- Footer with category and information links
+## 🌐 Live Website
 
-## Tech Stack
+**[Barta24 – Live Demo](https://barta24-with-takid.vercel.app)**
 
-- [Next.js](https://nextjs.org/) (App Router, Server Components)
-- [React](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [react-marquee-text](https://www.npmjs.com/package/react-marquee-text)
+## ✨ Features
 
-## API
+* 📰 Latest Bengali news
+* 🏠 Home page with featured news
+* 📂 News category pages
+* 📖 Detailed article pages
+* 🔥 Most-read news section
+* 📢 Latest news marquee
+* 🔐 Email & password authentication
+* 🔵 Google authentication
+* ✉️ Email verification
+* 👤 User profile
+* 📚 Reading history
+* 🔒 Protected article details
+* 📱 Responsive design
+* ⚡ Server-side data fetching with Next.js
+* 🚀 Deployed with Vercel
 
-News data comes from the following API:
+## 🛠️ Tech Stack
 
-| Endpoint | Purpose |
-|---|---|
-| `/api/categories` | Navigation categories |
-| `/api/news/sections` | Home page sections and articles |
-| `/api/news/most-read` | Most-read news |
-| `/api/news?limit=10` | Latest news for the ticker |
-| `/api/category/:slug` | News of a single category |
-| `/api/article/:id` | Full article details |
+* **Next.js 16**
+* **React**
+* **TypeScript**
+* **Tailwind CSS**
+* **Better Auth**
+* **MongoDB**
+* **Google OAuth**
+* **Vercel**
+* **News API**
+* **React Marquee Text**
 
-Base URL: `https://news-api-v2.vercel.app`
+## 🔗 News API
 
+Barta24 uses the following news API:
 
+```text
+https://news-api-v2.vercel.app/api
+```
 
-### Prerequisites
+### Main API endpoints
 
-- Node.js 18 or later
-- npm, yarn or pnpm
+```text
+/api/categories
+/api/news
+/api/news/sections
+/api/news/most-read
+/api/category/[slug]
+/api/article/[id]
+```
 
-### Installation
+## 🔐 Authentication
+
+Authentication is implemented using **Better Auth** with MongoDB.
+
+### Available authentication features
+
+* Email & password sign up
+* Email & password sign in
+* Email verification
+* Google sign in
+* Session management
+* Logout
+* Protected pages
+
+Users must be authenticated to access protected article details and user-specific features.
+
+## 👤 Profile
+
+Authenticated users can access their profile page.
+
+The profile includes:
+
+* User information
+* Reading history
+* Previously read articles
+
+If the user has not read any article yet, the profile shows:
+
+```text
+আপনি এখনও কোনো আর্টিকেল পড়েননি।
+সব আর্টিকেল দেখুন →
+```
+
+## 📚 Reading History
+
+When an authenticated user opens an article, the article can be recorded in their reading history.
+
+This allows users to return to their previously read news from the profile page.
+
+## 📁 Project Structure
+
+```text
+src/
+├── app/
+│   ├── category/
+│   │   └── [slug]/
+│   │       └── page.tsx
+│   │
+│   ├── details/
+│   │   └── [id]/
+│   │       └── page.tsx
+│   │
+│   ├── profile/
+│   │   └── page.tsx
+│   │
+│   ├── signin/
+│   │   └── page.tsx
+│   │
+│   ├── signup/
+│   │   └── page.tsx
+│   │
+│   ├── verify-email/
+│   │   └── page.tsx
+│   │
+│   ├── layout.tsx
+│   └── page.tsx
+│
+├── components/
+│   ├── Header.tsx
+│   ├── Navbar.tsx
+│   ├── Marquie.tsx
+│   ├── Footer.tsx
+│   ├── HomePage.tsx
+│   ├── NewsSection.tsx
+│   └── ...
+│
+└── lib/
+    ├── auth.ts
+    ├── auth-client.ts
+    ├── getData.ts
+    └── ...
+```
+
+## 🧭 Navigation Behavior
+
+The website uses a simple navigation structure.
+
+* **Header** → available throughout the website
+* **Navbar** → available on normal pages
+* **Profile page** → Navbar is hidden
+* **Marquee** → displayed only on the Home page
+* **Footer** → available where required
+
+## ⚙️ Getting Started
+
+### 1. Clone the repository
 
 ```bash
-git clone <https://github.com/IsmailHasanTakid/bangla-news-24>
+git clone https://github.com/IsmailHasanTakid/bangla-news-24.git
+```
+
+### 2. Go to the project directory
+
+```bash
 cd bangla-news-24
+```
+
+### 3. Install dependencies
+
+```bash
 npm install
 ```
 
-### Run in development
+### 4. Create environment variables
+
+Create a `.env.local` file in the root directory.
+
+```env
+BETTER_AUTH_DB_URL=your_mongodb_connection_string
+BETTER_AUTH_URL=http://localhost:3000
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+BETTER_AUTH_SECRET=your_secret
+
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+```
+
+> Never commit `.env` or `.env.local` files to GitHub.
+
+## ▶️ Run Development Server
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Then open:
 
-### Build for production
+```text
+http://localhost:3000
+```
+
+## 🏗️ Build for Production
+
+To create a production build:
 
 ```bash
 npm run build
+```
+
+To start the production server:
+
+```bash
 npm start
 ```
 
-## Configuration
+## 🚀 Deployment
 
-News images are loaded from the BBC image server, so the host must be allowed in `next.config.ts`:
+The project is deployed on **Vercel**.
 
-```ts
-import type { NextConfig } from "next";
+Production URL:
 
-const nextConfig: NextConfig = {
-  images: {
-    remotePatterns: [
-      { protocol: "https", hostname: "ichef.bbci.co.uk" },
-    ],
-  },
-};
-
-export default nextConfig;
+```text
+https://barta24-with-takid.vercel.app
 ```
 
-Restart the development server after changing this file.
+For production deployment, environment variables should be configured from the Vercel project settings.
 
-## How It Works
+## 🖼️ Image Configuration
 
-1. Pages are **Server Components**, so data is fetched on the server.
-2. `getData<T>()` wraps `fetch` and returns `null` if the API sends an invalid response, so the page can show a message instead of crashing.
-3. Clicking a news card opens `/details/[id]`, which loads the article from `/api/article/:id`.
-4. If the article API has no data (for example video items), the page looks the news up in `/api/news/sections` and shows its title, image and description.
-5. `NavLink` uses `usePathname()` to highlight the current page in the navbar.
+The project uses remote images from the BBC image server.
 
-## Known Limitations
+The required remote image domain is configured in the Next.js configuration.
 
-- Some items (such as videos or live pages) do not have a full article body.
-- The API is hosted on a free platform, so it may occasionally respond slowly or return an error.
-- "About", "Contact", "Privacy Policy" and "Terms" links in the footer are placeholders.
+```text
+ichef.bbci.co.uk
+```
 
-## Future Improvements
+## 🔄 How It Works
 
-- Search functionality
-- Sign in and sign up pages
-- Bookmark and share buttons
-- Dark mode
-- Loading skeletons and error pages
+### Home Page
 
-## Credits
+The Home page fetches news data from the API and displays:
 
-News content is sourced from **BBC Bangla** through a public API. All rights to the content belong to the original publisher. This project is for learning purposes.
+* Featured news
+* Additional news cards
+* Most-read news
+* News sections
+* Latest news marquee
 
+### Category Page
+
+Users can select a category from the navigation bar.
+
+For example:
+
+```text
+/category/politics
+/category/sports
+/category/technology
+```
+
+The selected category's news is fetched dynamically using the category slug.
+
+### Article Details
+
+Each article has its own dynamic route:
+
+```text
+/details/[id]
+```
+
+Example:
+
+```text
+/details/123
+```
+
+Authenticated users can read the full article and the article can be added to their reading history.
+
+## 🔒 Environment Variables
+
+The following environment variables are required:
+
+| Variable               | Purpose                     |
+| ---------------------- | --------------------------- |
+| `BETTER_AUTH_DB_URL`   | MongoDB connection string   |
+| `BETTER_AUTH_URL`      | Better Auth application URL |
+| `NEXT_PUBLIC_APP_URL`  | Public application URL      |
+| `BETTER_AUTH_SECRET`   | Better Auth secret          |
+| `GOOGLE_CLIENT_ID`     | Google OAuth client ID      |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret  |
+
+Do not expose private credentials in source code or commit them to GitHub.
+
+## 📌 Known Limitations
+
+* News content depends on the external news API.
+* Authentication requires a properly configured MongoDB database.
+* Google login requires correctly configured Google OAuth credentials.
+* Some external news images depend on the availability of their original image server.
+
+## 🔮 Future Improvements
+
+Possible future improvements include:
+
+* 🔎 Advanced news search
+* ❤️ Bookmark/favorite articles
+* 🌓 Dark/light mode
+* 🔔 News notifications
+* 💬 Article comments
+* 📱 Improved mobile experience
+* 🤖 AI-powered news recommendations
+* 🌐 More news sources
+* 📊 Personalized news feed
+
+## 👨‍💻 Author
+
+**Ismail Hasan Takid**
+
+GitHub:
+
+**[IsmailHasanTakid](https://github.com/IsmailHasanTakid)**
+
+## 📄 License
+
+This project is created for learning, development, and educational purposes.

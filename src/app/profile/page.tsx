@@ -203,7 +203,8 @@ const ProfilePage = async () => {
                             </h3>
 
                             <p className="mt-1 text-sm text-slate-400">
-                                আপনি কোনো খবর পড়লে সেটি এখানে দেখা যাবে।
+                                আপনি এখনও কোনো আর্টিকেল পড়েননি।
+
                             </p>
 
                             <Link
@@ -222,7 +223,7 @@ const ProfilePage = async () => {
                                     className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-md transition hover:border-blue-400/30 hover:bg-white/10"
                                 >
                                     {item.image && (
-                                
+
                                         <img
                                             src={item.image}
                                             alt=""
