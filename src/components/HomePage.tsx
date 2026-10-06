@@ -42,223 +42,248 @@ const HomePage = async () => {
     const data = await getData<SectionsResponse>(
         "https://news-api-v2.vercel.app/api/news/sections"
     );
+
     const data2 = await getData<MostReadResponse>(
         "https://news-api-v2.vercel.app/api/news/most-read"
     );
 
     const articles: NewsArticle[] = data?.data?.[0]?.articles ?? [];
 
-    // Show a message if the main news could not be loaded
     if (articles.length === 0) {
         return (
-            <p className="p-10 text-center text-gray-500">
-                খবর লোড করা যায়নি, একটু পরে আবার চেষ্টা করুন।
-            </p>
+            <div className="flex min-h-[60vh] items-center justify-center px-5">
+                <div className="rounded-2xl border border-gray-300 bg-white px-8 py-12 text-center shadow-sm">
+                    <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-red-50 text-xl font-bold text-red-600">
+                        !
+                    </div>
+
+                    <p className="font-semibold text-gray-600">
+                        খবর লোড করা যায়নি, একটু পরে আবার চেষ্টা করুন।
+                    </p>
+                </div>
+            </div>
         );
     }
 
     const FirstNews: NewsArticle = articles[0];
     const OtherNews: NewsArticle[] = articles.slice(1, 5);
-    const MostReads: MostReadItem[] = data2?.data ?? [];
+    const MostReads: MostReadItem[] = (data2?.data ?? []).slice(0, 7);
 
     return (
-        <main className="mx-auto max-w-7xl px-4 sm:px-5 pb-20">
+        <main className="mx-auto max-w-[1500px] px-4 pb-20 sm:px-6 lg:px-8">
 
-            {/* Top story + main news list */}
-            <section className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* ===========MAIN 3 COLUMN NEWS LAYOUT= */}
+
+            <section className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-3">
+
+                {/* ============COLUMN 1 — FEATURED NEWS=========== */}
 
                 <Link
                     href={`/details/${FirstNews.id}`}
-                    className="group relative lg:col-span-2 min-h-[420px] sm:min-h-[520px] lg:h-[580px] overflow-hidden rounded-3xl bg-gray-900 shadow-lg shadow-gray-200/70"
+                    className="group overflow-hidden rounded-xl border border-gray-700 bg-[#111111] transition-all duration-300 hover:border-gray-500"
                 >
+
+                    {/* Image */}
+
                     {FirstNews.imageUrl && (
-                        <Image
-                            src={FirstNews.imageUrl}
-                            alt={FirstNews.imageAlt || FirstNews.title}
-                            width={1000}
-                            height={700}
-                            priority
-                            className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
-                        />
+                        <div className="relative h-[280px] overflow-hidden sm:h-[330px] lg:h-[280px]">
+
+                            <Image
+                                src={FirstNews.imageUrl}
+                                alt={
+                                    FirstNews.imageAlt ||
+                                    FirstNews.title
+                                }
+                                width={900}
+                                height={600}
+                                priority
+                                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+
+                            {/* Image overlay */}
+
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                        </div>
                     )}
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/5 opacity-95 transition-opacity duration-500 group-hover:opacity-100" />
 
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent" />
+                    <div className="p-5">
 
-                    <div className="absolute bottom-0 left-0 right-0 flex flex-col gap-4 p-5 sm:p-8 lg:p-10">
+                        {/* Category */}
 
-                        <span className="w-fit rounded-full border border-white/20 bg-red-600 px-4 py-2 text-xs font-bold tracking-wide text-white shadow-lg shadow-red-900/30">
-                            {FirstNews.category}
-                        </span>
+                        <div className="mb-4">
+                            <span className="text-sm font-bold text-red-500">
+                                {FirstNews.category}
+                            </span>
+                        </div>
 
-                        <h1 className="max-w-3xl text-2xl font-black leading-snug text-white sm:text-3xl lg:text-4xl transition-colors duration-300 group-hover:text-red-200">
+                        {/* Title */}
+
+                        <h1 className="text-xl font-bold leading-[1.6] text-white transition-colors duration-300 group-hover:text-red-400 sm:text-2xl">
                             {FirstNews.title}
                         </h1>
 
-                        <p className="max-w-2xl line-clamp-2 sm:line-clamp-3 text-sm sm:text-base leading-7 text-gray-200">
+
+                        <p className="mt-4 line-clamp-3 text-sm leading-7 text-gray-400">
                             {FirstNews.description}
                         </p>
 
-                        <div className="flex items-center justify-between border-t border-white/20 pt-5 mt-1">
-                            <span className="text-xs sm:text-sm text-gray-300">
-                                {formatDate(FirstNews.firstPublished)}
+
+
+                        <div className="mt-5 border-t border-gray-800 pt-4">
+
+                            <span className="text-xs text-gray-500">
+                                {formatDate(
+                                    FirstNews.firstPublished
+                                )}
                             </span>
 
-                            <span className="flex items-center gap-3 text-sm font-bold text-white">
-                                বিস্তারিত পড়ুন
-                                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-red-600 transition-all duration-300 group-hover:translate-x-2 group-hover:bg-red-500">
-                                    →
-                                </span>
-                            </span>
                         </div>
+
                     </div>
 
-                    <div className="absolute right-6 top-6 hidden sm:flex items-center gap-2 rounded-full border border-white/20 bg-black/30 px-4 py-2 backdrop-blur-md">
-                        <span className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
-                        <span className="text-xs font-semibold text-white">
-                            TOP STORY
-                        </span>
-                    </div>
                 </Link>
 
-                <aside className="flex flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-lg shadow-gray-200/40">
 
-                    <div className="relative overflow-hidden bg-gradient-to-r from-red-700 via-red-600 to-rose-800 px-6 py-6">
-                        <div className="absolute -right-8 -top-12 h-36 w-36 rounded-full border-[20px] border-white/10" />
+                {/* ==================== COLUMN 2 — MAIN NEWS================ */}
 
-                        <div className="relative flex items-center justify-between">
-                            <div>
-                                <p className="text-xs font-bold tracking-[0.2em] text-red-100">
-                                    BREAKING UPDATES
-                                </p>
+                <div className="overflow-hidden rounded-xl border border-gray-700 bg-[#111111]">
 
-                                <h2 className="mt-2 text-xl font-extrabold text-white">
-                                    প্রধান খবর
-                                </h2>
-                            </div>
 
-                            <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/20 bg-white/10 backdrop-blur-md">
-                                <span className="text-xl text-white">✦</span>
-                            </div>
-                        </div>
+
+                    <div className="border-b border-gray-700 px-5 py-5">
+
+                        <h2 className="text-xl font-bold text-white">
+                            প্রধান খবর
+                        </h2>
+
                     </div>
 
-                    <div className="flex flex-1 flex-col divide-y divide-gray-100">
+
+                    {/* News list */}
+
+                    <div>
+
                         {OtherNews.map((news, i) => (
                             <Link
                                 href={`/details/${news.id}`}
                                 key={news.id}
-                                className="group relative flex flex-1 flex-col justify-center gap-2 overflow-hidden px-6 py-5 transition-all duration-300 hover:bg-red-50/70"
+                                className="group relative block border-b border-gray-800 px-5 py-5 last:border-b-0 transition-colors duration-300 hover:bg-[#181818]"
                             >
-                                <div className="absolute left-0 top-0 h-full w-1 origin-bottom scale-y-0 bg-red-600 transition-transform duration-300 group-hover:scale-y-100" />
 
-                                <div className="flex items-center justify-between">
-                                    <span className="text-xs font-bold text-red-600">
-                                        {news.category}
-                                    </span>
 
-                                    <span className="text-xs font-bold text-gray-300 transition-colors group-hover:text-red-400">
-                                        0{i + 1}
-                                    </span>
-                                </div>
+                                <div className="absolute bottom-0 left-0 top-0 w-[3px] origin-bottom scale-y-0 bg-red-500 transition-transform duration-300 group-hover:scale-y-100" />
 
-                                <h3 className="line-clamp-3 text-sm font-bold leading-7 text-gray-800 transition-colors duration-300 group-hover:text-red-700">
+
+                                {/* Category */}
+
+                                <span className="text-xs font-bold text-red-500">
+                                    {news.category}
+                                </span>
+
+
+
+
+                                <h3 className="mt-2 line-clamp-3 text-base font-semibold leading-7 text-white transition-colors duration-300 group-hover:text-red-400">
                                     {news.title}
                                 </h3>
 
-                                <span className="flex items-center gap-1 text-xs font-semibold text-gray-400 transition-all duration-300 group-hover:gap-3 group-hover:text-red-600">
-                                    বিস্তারিত পড়ুন →
-                                </span>
+
+
+
+                                <div className="mt-3 text-xs font-bold text-gray-600">
+                                    {String(i + 1).padStart(2, "0")}
+                                </div>
+
                             </Link>
                         ))}
+
                     </div>
 
-                    <div className="h-1 bg-gradient-to-r from-red-600 via-rose-400 to-transparent" />
+                </div>
 
-                </aside>
-            </section>
 
-            {/* Most read */}
-            {MostReads.length > 0 && (
-                <section className="mt-16">
+                {/* ===== COLUMN 3 — MOST READ === */}
 
-                    <div className="flex items-center gap-4">
-                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-red-50 text-red-700">
-                            <span className="text-xl">↗</span>
-                        </div>
+                {MostReads.length > 0 && (
+                    <aside className="overflow-hidden rounded-xl border border-gray-700 bg-[#111111]">
 
-                        <div>
-                            <p className="text-xs font-bold uppercase tracking-widest text-red-600">
-                                Trending News
-                            </p>
+                        {/* Heading */}
 
-                            <h2 className="text-xl sm:text-2xl font-black tracking-tight text-gray-900">
+                        <div className="border-b border-gray-700 px-5 py-5">
+
+                            <h2 className="text-xl font-bold text-white">
                                 সর্বাধিক পঠিত
                             </h2>
+
                         </div>
 
-                        <span className="h-px flex-1 bg-gradient-to-r from-red-200 via-gray-200 to-transparent" />
-                    </div>
 
-                    <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 rounded-3xl border border-gray-100 bg-gradient-to-br from-white via-white to-red-50/60 p-4 sm:p-7 shadow-sm">
+                        {/* Most read list */}
 
-                        {MostReads.map((most, i) => (
-                            <Link
-                                href={`/details/${most.id}`}
-                                key={most.id}
-                                className="group flex items-center gap-4 rounded-2xl border border-transparent p-4 transition-all duration-300 hover:border-red-100 hover:bg-white hover:shadow-lg hover:shadow-red-100/60"
-                            >
-                                <span
-                                    className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-xl font-black transition-all duration-300 group-hover:scale-110 ${i === 0
-                                            ? "bg-red-600 text-white shadow-lg shadow-red-200"
-                                            : i === 1
-                                                ? "bg-red-100 text-red-700"
-                                                : "bg-gray-100 text-gray-500 group-hover:bg-red-100 group-hover:text-red-700"
-                                        }`}
+                        <div>
+
+                            {MostReads.map((most, i) => (
+                                <Link
+                                    href={`/details/${most.id}`}
+                                    key={most.id}
+                                    className="group flex gap-4 border-b border-gray-800 px-5 py-4 last:border-b-0 transition-colors duration-300 hover:bg-[#181818]"
                                 >
-                                    {(i + 1).toLocaleString("bn-BD")}
-                                </span>
 
-                                <div className="min-w-0 flex-1">
-                                    <h3 className="line-clamp-2 text-sm font-bold leading-7 text-gray-800 transition-colors duration-300 group-hover:text-red-700">
-                                        {most.title}
-                                    </h3>
+                                    {/* Ranking number */}
 
-                                    <span className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-gray-400 transition-colors group-hover:text-red-500">
-                                        বিস্তারিত পড়ুন
-                                        <span className="transition-transform group-hover:translate-x-1">
-                                            →
-                                        </span>
+                                    <span
+                                        className={`shrink-0 text-2xl font-bold ${i === 0
+                                            ? "text-red-500"
+                                            : "text-red-500/80"
+                                            }`}
+                                    >
+                                        {i + 1}
                                     </span>
-                                </div>
-                            </Link>
-                        ))}
 
-                    </div>
-                </section>
-            )}
 
-            {/* More news sections */}
-            <section className="mt-16">
+                                    {/* News */}
 
-                <div className="mb-7 flex items-center gap-4">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-red-50 text-red-700">
-                        <span className="text-xl">▤</span>
-                    </div>
+                                    <div className="min-w-0 flex-1">
 
-                    <div>
-                        <p className="text-xs font-bold uppercase tracking-widest text-red-600">
-                            More Updates
-                        </p>
+                                        <h3 className="line-clamp-3 text-sm font-semibold leading-7 text-white transition-colors duration-300 group-hover:text-red-400">
+                                            {most.title}
+                                        </h3>
 
-                        <h2 className="text-xl sm:text-2xl font-black text-gray-900">
-                            আরও খবর
-                        </h2>
-                    </div>
+                                    </div>
 
-                    <span className="h-px flex-1 bg-gradient-to-r from-red-200 via-gray-200 to-transparent" />
+                                </Link>
+                            ))}
+
+                        </div>
+
+                    </aside>
+                )}
+
+            </section>
+
+
+            {/* ===== MORE NEWS== */}
+
+
+            <section className="mt-14">
+
+
+
+                <div className="mb-7 flex items-center gap-4 mt-10 mb-15">
+
+                    <div className="h-px flex-1 bg-gray-300" />
+
+                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-red-500">
+                        More Updates
+                    </p>
+
+                    <div className="h-px flex-1 bg-gray-300" />
+
                 </div>
+
+
+
 
                 <NewsSection />
 

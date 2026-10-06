@@ -1,5 +1,9 @@
 import Image from "next/image";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
 import { getData } from "@/lib/getData";
+import { recordRead } from "@/lib/history";
 
 interface BodyItem {
     type: string;
@@ -40,12 +44,21 @@ interface DetailsPageProps {
 }
 
 const DetailsPage = async ({ params }: DetailsPageProps) => {
+
+    // login না থাকলে sign in পেজে পাঠাবে
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session) {
+        redirect("/signin");
+    }
+
     const { id } = await params;
+
 
     const data = await getData<ArticleResponse>(
         `https://news-api-v2.vercel.app/api/article/${id}`
     );
     const detail = data?.data;
+
 
     // Fallback: if the article API has no data, find the news in the sections API
     if (!detail) {
@@ -60,6 +73,14 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
         if (!news) {
             return <p className="p-5">এই খবরটি পাওয়া যায়নি।</p>;
         }
+
+        // পড়ার history-তে জমা
+        await recordRead({
+            userId: session.user.id,
+            newsId: id,
+            title: news.title,
+            image: news.imageUrl,
+        });
 
         return (
             <div className="max-w-4xl mx-auto p-5">
@@ -79,6 +100,17 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
             </div>
         );
     }
+
+
+    const firstImage =
+        detail.body?.find((b) => b.type === "image" && b.url)?.url ?? null;
+
+    await recordRead({
+        userId: session.user.id,
+        newsId: id,
+        title: detail.title,
+        image: firstImage,
+    });
 
     const date = detail.firstPublished
         ? new Date(detail.firstPublished).toLocaleDateString("bn-BD", {

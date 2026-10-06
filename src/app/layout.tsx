@@ -28,20 +28,22 @@ export default function RootLayout({
       data-theme="light"
       className={`${notoSerifBengali.className} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        {/* Header and ticker are hidden on the details page */}
-        <HideOnDetails>
-          <Header />
-        </HideOnDetails>
+      <body className="min-h-full flex flex-col px-4 sm:px-8 lg:px-16 xl:px-24">
 
-        {/* Navbar stays on every page and sticks to the top on scroll */}
-        <Navbar />
+
+        <Header />
+
+        <HideOnDetails>
+          <Navbar />
+        </HideOnDetails>
 
         <HideOnDetails>
           <Marquie />
         </HideOnDetails>
 
-        <main className="w-full pt-8">{children}</main>
+        <main className="w-full pt-8">
+          {children}
+        </main>
 
         <Footer />
       </body>
