@@ -17,7 +17,7 @@ const NavLink = ({ href, children }: NavLinkProps) => {
     return (
         <Link
             href={href}
-            className={`px-4 py-3 text-sm border-b-2 ${isActive
+            className={`shrink-0 px-3 sm:px-4 py-2.5 sm:py-3 text-[13px] sm:text-sm border-b-2 ${isActive
                 ? "font-bold text-red-600 border-red-600"
                 : "font-semibold text-gray-700 border-transparent hover:text-red-600 hover:bg-gray-50"
                 }`}

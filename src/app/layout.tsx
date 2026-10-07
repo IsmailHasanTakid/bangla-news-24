@@ -27,9 +27,9 @@ export default function RootLayout({
     <html
       lang="bn"
       data-theme="light"
-      className={`${notoSerifBengali.className} h-full antialiased`}
+      className={`${notoSerifBengali.className} h-full antialiased bg-black`}
     >
-      <body className="min-h-full flex flex-col px-4 sm:px-8 lg:px-16 xl:px-24">
+      <body className="min-h-full flex flex-col bg-white mx-4 sm:mx-8 lg:mx-16 xl:mx-24">
 
 
         <Header />

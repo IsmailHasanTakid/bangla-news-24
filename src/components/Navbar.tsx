@@ -22,7 +22,7 @@ const Navbar = async () => {
 
     return (
         <div className="sticky top-0 z-50 w-full bg-white border-b border-gray-200 border-t-2 border-t-red-600 shadow-sm">
-            <div className="max-w-7xl mx-auto flex items-center justify-center gap-1 px-5">
+            <div className="max-w-7xl mx-auto flex items-center justify-start lg:justify-center gap-0.5 sm:gap-1 px-3 sm:px-5 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 <NavLink href="/">হোম</NavLink>
 
                 {NavData.map((n) => (

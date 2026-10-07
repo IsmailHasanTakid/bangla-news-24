@@ -45,7 +45,7 @@ interface DetailsPageProps {
 
 const DetailsPage = async ({ params }: DetailsPageProps) => {
 
-    // login না থাকলে sign in পেজে পাঠাবে
+
     const session = await auth.api.getSession({ headers: await headers() });
     if (!session) {
         redirect("/signin");
@@ -74,7 +74,7 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
             notFound();
         }
 
-        // পড়ার history-তে জমা
+    
         await recordRead({
             userId: session.user.id,
             newsId: id,
@@ -83,8 +83,10 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
         });
 
         return (
-            <div className="max-w-4xl mx-auto p-5">
-                <h1 className="text-3xl font-bold">{news.title}</h1>
+            <div className="max-w-4xl mx-auto px-1 py-3 sm:p-5">
+                <h1 className="text-2xl leading-snug font-bold break-words sm:text-3xl">
+                    {news.title}
+                </h1>
 
                 {news.imageUrl && (
                     <Image
@@ -92,11 +94,13 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
                         alt={news.imageAlt || news.title}
                         width={900}
                         height={500}
-                        className="w-full rounded-xl mt-5"
+                        className="w-full h-auto rounded-lg mt-4 sm:rounded-xl sm:mt-5"
                     />
                 )}
 
-                <p className="mt-4 leading-8">{news.description}</p>
+                <p className="mt-3 text-[15px] leading-7 break-words sm:mt-4 sm:text-base sm:leading-8">
+                    {news.description}
+                </p>
             </div>
         );
     }
@@ -119,10 +123,12 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
         : "";
 
     return (
-        <div className="max-w-6xl mx-auto p-5">
-            <h1 className="text-3xl font-bold">{detail.title}</h1>
+        <div className="max-w-6xl mx-auto px-1 py-3 sm:p-5">
+            <h1 className="text-2xl leading-snug font-bold break-words sm:text-3xl">
+                {detail.title}
+            </h1>
 
-            <div className="text-gray-500 mt-3 flex gap-3 text-sm">
+            <div className="text-gray-500 mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs sm:mt-3 sm:text-sm">
                 {detail.byline?.[0] && <span>{detail.byline[0].name}</span>}
                 <span>{date}</span>
             </div>
@@ -130,16 +136,16 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
             {detail.body?.map((item, index) => {
                 if (item.type === "image" && item.url) {
                     return (
-                        <figure key={index} className="mt-5">
+                        <figure key={index} className="mt-4 sm:mt-5">
                             <Image
                                 src={item.url}
                                 alt={item.altText || detail.title}
                                 width={item.width ?? 900}
                                 height={item.height ?? 500}
-                                className="w-full rounded-xl"
+                                className="w-full h-auto rounded-lg sm:rounded-xl"
                             />
                             {item.caption && (
-                                <figcaption className="text-sm text-gray-500 mt-2">
+                                <figcaption className="text-xs text-gray-500 mt-2 sm:text-sm">
                                     {item.caption}
                                 </figcaption>
                             )}
@@ -149,14 +155,20 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
 
                 if (item.type === "subheading") {
                     return (
-                        <h2 key={index} className="text-2xl font-bold mt-6">
+                        <h2
+                            key={index}
+                            className="text-xl leading-snug font-bold mt-5 break-words sm:text-2xl sm:mt-6"
+                        >
                             {item.text}
                         </h2>
                     );
                 }
 
                 return (
-                    <p key={index} className="mt-4 leading-8 whitespace-pre-line">
+                    <p
+                        key={index}
+                        className="mt-3 text-[15px] leading-7 whitespace-pre-line break-words sm:mt-4 sm:text-base sm:leading-8"
+                    >
                         {item.text}
                     </p>
                 );
