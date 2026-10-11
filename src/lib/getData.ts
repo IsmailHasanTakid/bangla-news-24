@@ -1,10 +1,11 @@
 export async function getData<T>(url: string): Promise<T | null> {
     try {
-        const res = await fetch(url);
+        const res = await fetch(url, {
+            next: { revalidate: 600 },
+        });
+        if (!res.ok) return null;
 
-        const text = await res.text();
-
-        return JSON.parse(text) as T;
+        return (await res.json()) as T;
     } catch {
         return null;
     }
