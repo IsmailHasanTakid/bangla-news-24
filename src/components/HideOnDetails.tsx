@@ -2,12 +2,16 @@
 
 import { usePathname } from "next/navigation";
 
+const hiddenRoutes = ["/profile", "/signin", "/signup"];
+
 const HideOnDetails = ({ children }: { children: React.ReactNode }) => {
     const pathname = usePathname();
 
-    if (pathname === "/profile") {
-        return null;
-    }
+    const hidden = hiddenRoutes.some(
+        (route) => pathname === route || pathname.startsWith(`${route}/`)
+    );
+
+    if (hidden) return null;
 
     return <>{children}</>;
 };

@@ -5,9 +5,12 @@ import HideOnDetails from "@/components/HideOnDetails";
 import Header from "@/components/header";
 import Navbar from "@/components/Navbar";
 import Marquie from "@/components/Marquie";
+import ToastProvider from "@/components/ToastProvider";
 import Footer from "@/components/Footer";
-import ShowOnlyHomeMarquie from "@/components/ShowOnlyHomeMarquie.tsx";
+import PageBackground from "@/components/PageBackground";
+import PageShell from "@/components/PageShell";
 
+import ShowOnlyHomeMarquie from "@/components/ShowOnlyHomeMarquie";
 const notoSerifBengali = Noto_Serif_Bengali({
   variable: "--font-geist-sans",
   subsets: ["latin", "bengali"],
@@ -27,26 +30,30 @@ export default function RootLayout({
     <html
       lang="bn"
       data-theme="light"
-      className={`${notoSerifBengali.className} h-full antialiased bg-black`}
+      className={`${notoSerifBengali.className} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-white mx-4 sm:mx-8 lg:mx-16 xl:mx-24">
+      <body className="min-h-full">
+        <PageShell>
+          <Header />
 
+          <HideOnDetails>
+            <Navbar />
+          </HideOnDetails>
 
-        <Header />
+          <ShowOnlyHomeMarquie>
+            <Marquie />
+          </ShowOnlyHomeMarquie>
 
-        <HideOnDetails>
-          <Navbar />
-        </HideOnDetails>
+          <PageBackground>
+            <main className="w-full min-h-screen pt-0">
+              {children}
+            </main>
+          </PageBackground>
 
-        <ShowOnlyHomeMarquie>
-          <Marquie />
-        </ShowOnlyHomeMarquie>
+          <Footer />
 
-        <main className="w-full flex-1 pt-8">
-          {children}
-        </main>
-
-        <Footer />
+        </PageShell>
+        <ToastProvider />
       </body>
     </html>
   );

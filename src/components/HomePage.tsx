@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import NewsSection from "./NewsSection";
+import Hero from "./Hero";
 import { getData } from "@/lib/getData";
 
 interface NewsArticle {
@@ -39,6 +40,10 @@ const formatDate = (value: string | null): string =>
         })
         : "";
 
+// Shared light-glass look for the three news panels
+const glassPanel =
+    "overflow-hidden rounded-xl border border-white/80 bg-white/60 shadow-[0_24px_60px_-28px_rgba(15,23,42,0.35),0_1px_0_rgba(255,255,255,0.95)_inset] backdrop-blur-xl";
+
 const HomePage = async () => {
     const data = await getData<SectionsResponse>(
         "https://news-api-v2.vercel.app/api/news/sections"
@@ -53,7 +58,7 @@ const HomePage = async () => {
     if (articles.length === 0) {
         return (
             <div className="flex min-h-[60vh] items-center justify-center px-4 sm:px-5">
-                <div className="w-full max-w-md rounded-2xl border border-gray-300 bg-white px-5 py-10 text-center shadow-sm sm:px-8 sm:py-12">
+                <div className="w-full max-w-md rounded-2xl border border-white/80 bg-white/70 px-5 py-10 text-center shadow-sm backdrop-blur-xl sm:px-8 sm:py-12">
                     <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-red-50 text-xl font-bold text-red-600">
                         !
                     </div>
@@ -70,18 +75,28 @@ const HomePage = async () => {
     const OtherNews: NewsArticle[] = articles.slice(1, 5);
     const MostReads: MostReadItem[] = data2?.data ?? [];
 
+    // Stories already shown in the 3-column block, so the Hero picks a different one
+    const shownIds = [FirstNews.id, ...OtherNews.map((n) => n.id)];
+
     return (
         <main className="mx-auto max-w-[1500px] px-4 pb-12 sm:px-6 sm:pb-20 lg:px-8">
 
-            {/* ===========MAIN 3 COLUMN NEWS LAYOUT= */}
+            {/* ============ HERO ============ */}
 
-            <section className="mt-4 grid grid-cols-1 gap-4 sm:mt-6 sm:gap-5 lg:grid-cols-3">
+            <Hero skipIds={shownIds} />
 
-                {/* ============COLUMN 1 — FEATURED NEWS=========== */}
+            {/* ======= MAIN 3 COLUMN NEWS LAYOUT (Hero button scrolls here) ======= */}
+
+            <section
+                id="news"
+                className="grid scroll-mt-24 grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-3"
+            >
+
+                {/* ============ COLUMN 1 — FEATURED NEWS ============ */}
 
                 <Link
                     href={`/details/${FirstNews.id}`}
-                    className="group overflow-hidden rounded-xl border border-gray-700 bg-[#111111] transition-all duration-300 hover:border-gray-500"
+                    className={`group ${glassPanel} transition-all duration-300 hover:-translate-y-1 hover:border-red-100 hover:shadow-[0_30px_70px_-28px_rgba(239,68,68,0.4),0_1px_0_rgba(255,255,255,0.95)_inset]`}
                 >
 
                     {/* Image */}
@@ -91,54 +106,42 @@ const HomePage = async () => {
 
                             <Image
                                 src={FirstNews.imageUrl}
-                                alt={
-                                    FirstNews.imageAlt ||
-                                    FirstNews.title
-                                }
+                                alt={FirstNews.imageAlt || FirstNews.title}
                                 width={900}
                                 height={600}
-                                priority
                                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                             />
 
                             {/* Image overlay */}
 
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                         </div>
                     )}
-
 
                     <div className="p-4 sm:p-5">
 
                         {/* Category */}
 
                         <div className="mb-3 sm:mb-4">
-                            <span className="text-sm font-bold text-red-500">
+                            <span className="text-sm font-bold text-red-600">
                                 {FirstNews.category}
                             </span>
                         </div>
 
                         {/* Title */}
 
-                        <h1 className="text-lg font-bold leading-[1.6] text-white transition-colors duration-300 group-hover:text-red-400 sm:text-2xl">
+                        <h2 className="text-lg font-bold leading-[1.6] text-slate-900 transition-colors duration-300 group-hover:text-red-600 sm:text-2xl">
                             {FirstNews.title}
-                        </h1>
+                        </h2>
 
-
-                        <p className="mt-3 line-clamp-3 text-sm leading-7 text-gray-400 sm:mt-4">
+                        <p className="mt-3 line-clamp-3 text-sm leading-7 text-slate-500 sm:mt-4">
                             {FirstNews.description}
                         </p>
 
-
-
-                        <div className="mt-4 border-t border-gray-800 pt-3 sm:mt-5 sm:pt-4">
-
-                            <span className="text-xs text-gray-500">
-                                {formatDate(
-                                    FirstNews.firstPublished
-                                )}
+                        <div className="mt-4 border-t border-slate-200/70 pt-3 sm:mt-5 sm:pt-4">
+                            <span className="text-xs text-slate-400">
+                                {formatDate(FirstNews.firstPublished)}
                             </span>
-
                         </div>
 
                     </div>
@@ -146,18 +149,16 @@ const HomePage = async () => {
                 </Link>
 
 
-                {/* ==================== COLUMN 2 — MAIN NEWS================ */}
+                {/* ============ COLUMN 2 — MAIN NEWS ============ */}
 
-                <div className="overflow-hidden rounded-xl border border-gray-700 bg-[#111111]">
+                <div className={glassPanel}>
 
-                    <div className="border-b border-gray-700 px-4 py-4 sm:px-5 sm:py-5">
-
-                        <h2 className="text-lg font-bold text-white sm:text-xl">
+                    <div className="border-b border-slate-200/70 px-4 py-4 sm:px-5 sm:py-5">
+                        <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900 sm:text-xl">
+                            <span className="h-5 w-1 rounded-full bg-gradient-to-b from-red-500 to-orange-400" />
                             প্রধান খবর
                         </h2>
-
                     </div>
-
 
                     {/* News list */}
 
@@ -167,22 +168,22 @@ const HomePage = async () => {
                             <Link
                                 href={`/details/${news.id}`}
                                 key={news.id}
-                                className="group relative block border-b border-gray-800 px-4 py-4 last:border-b-0 transition-colors duration-300 hover:bg-[#181818] sm:px-5 sm:py-5"
+                                className="group relative block border-b border-slate-200/70 px-4 py-4 transition-colors duration-300 last:border-b-0 hover:bg-white/70 sm:px-5 sm:py-5"
                             >
 
-                                <div className="absolute bottom-0 left-0 top-0 w-[3px] origin-bottom scale-y-0 bg-red-500 transition-transform duration-300 group-hover:scale-y-100" />
+                                <div className="absolute bottom-0 left-0 top-0 w-[3px] origin-bottom scale-y-0 bg-gradient-to-b from-red-500 to-orange-400 transition-transform duration-300 group-hover:scale-y-100" />
 
                                 {/* Category */}
 
-                                <span className="text-xs font-bold text-red-500">
+                                <span className="text-xs font-bold text-red-600">
                                     {news.category}
                                 </span>
 
-                                <h3 className="mt-2 line-clamp-3 text-[15px] font-semibold leading-7 text-white transition-colors duration-300 group-hover:text-red-400 sm:text-base">
+                                <h3 className="mt-2 line-clamp-3 text-[15px] font-semibold leading-7 text-slate-900 transition-colors duration-300 group-hover:text-red-600 sm:text-base">
                                     {news.title}
                                 </h3>
 
-                                <div className="mt-2 text-xs font-bold text-gray-600 sm:mt-3">
+                                <div className="mt-2 text-xs font-bold text-slate-400 sm:mt-3">
                                     {String(i + 1).padStart(2, "0")}
                                 </div>
 
@@ -194,15 +195,16 @@ const HomePage = async () => {
                 </div>
 
 
-                {/* ===== COLUMN 3 — MOST READ (click to expand) === */}
+                {/* ============ COLUMN 3 — MOST READ (click to expand) ============ */}
 
                 {MostReads.length > 0 && (
-                    <aside className="self-start overflow-hidden rounded-xl border border-gray-700 bg-[#111111]">
+                    <aside className={`self-start ${glassPanel}`}>
                         <details className="group/mr">
 
                             {/* Button (heading) */}
-                            <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-4 transition-colors duration-300 hover:bg-[#181818] sm:px-5 sm:py-5 [&::-webkit-details-marker]:hidden">
-                                <h2 className="text-lg font-bold text-white sm:text-xl">
+                            <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-4 transition-colors duration-300 hover:bg-white/70 sm:px-5 sm:py-5 [&::-webkit-details-marker]:hidden">
+                                <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900 sm:text-xl">
+                                    <span className="h-5 w-1 rounded-full bg-gradient-to-b from-red-500 to-orange-400" />
                                     সর্বাধিক পঠিত
                                 </h2>
 
@@ -210,34 +212,27 @@ const HomePage = async () => {
                             </summary>
 
                             {/* Most read list (shows after click) */}
-                            <div className="border-t border-gray-700">
+                            <div className="border-t border-slate-200/70">
 
                                 {MostReads.map((most, i) => (
                                     <Link
                                         href={`/details/${most.id}`}
                                         key={most.id}
-                                        className="group flex gap-3 border-b border-gray-800 px-4 py-3.5 last:border-b-0 transition-colors duration-300 hover:bg-[#181818] sm:gap-4 sm:px-5 sm:py-4"
+                                        className="group flex gap-3 border-b border-slate-200/70 px-4 py-3.5 transition-colors duration-300 last:border-b-0 hover:bg-white/70 sm:gap-4 sm:px-5 sm:py-4"
                                     >
 
                                         {/* Ranking number */}
 
-                                        <span
-                                            className={`shrink-0 text-xl font-bold sm:text-2xl ${i === 0
-                                                ? "text-red-500"
-                                                : "text-red-500/80"
-                                                }`}
-                                        >
+                                        <span className="shrink-0 bg-gradient-to-br from-red-500 to-orange-400 bg-clip-text text-xl font-black text-transparent sm:text-2xl">
                                             {i + 1}
                                         </span>
 
                                         {/* News */}
 
                                         <div className="min-w-0 flex-1">
-
-                                            <h3 className="line-clamp-3 text-sm font-semibold leading-7 text-white transition-colors duration-300 group-hover:text-red-400">
+                                            <h3 className="line-clamp-3 text-sm font-semibold leading-7 text-slate-900 transition-colors duration-300 group-hover:text-red-600">
                                                 {most.title}
                                             </h3>
-
                                         </div>
 
                                     </Link>
@@ -252,19 +247,19 @@ const HomePage = async () => {
             </section>
 
 
-            {/* ===== MORE NEWS== */}
+            {/* ============ MORE NEWS ============ */}
 
-            <section className="mt-10 sm:mt-14">
+            <section className="mt-12 sm:mt-16">
 
-                <div className="mb-7 flex items-center gap-3 mt-6 sm:mt-10 sm:mb-15 sm:gap-4">
+                <div className="mb-7 flex items-center gap-3 sm:mb-10 sm:gap-4">
 
-                    <div className="h-px flex-1 bg-gray-300" />
+                    <div className="h-px flex-1 bg-gradient-to-r from-transparent to-slate-300" />
 
                     <p className="shrink-0 whitespace-nowrap text-xs font-bold uppercase tracking-[0.15em] text-red-500 sm:tracking-[0.2em]">
                         More Updates
                     </p>
 
-                    <div className="h-px flex-1 bg-gray-300" />
+                    <div className="h-px flex-1 bg-gradient-to-l from-transparent to-slate-300" />
 
                 </div>
 

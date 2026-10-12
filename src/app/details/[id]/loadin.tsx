@@ -1,31 +1,39 @@
-const DetailsLoading = () => {
+export default function DetailsLoading() {
     return (
-        <div className="max-w-6xl mx-auto px-1 py-3 sm:p-5">
-            {/* Title */}
-            <div className="skeleton h-8 w-full sm:h-9" />
-            <div className="skeleton h-8 w-2/3 mt-3 sm:h-9" />
+        <main className="mx-auto min-h-screen max-w-5xl px-4 py-8 sm:px-6">
+            <div className="animate-pulse">
+                {/* Category */}
+                <div className="mb-5 h-6 w-28 rounded-full bg-gray-200" />
 
-            {/* Byline + date */}
-            <div className="flex gap-3 mt-4">
-                <div className="skeleton h-4 w-28" />
-                <div className="skeleton h-4 w-36" />
-            </div>
+                {/* Title */}
+                <div className="mb-3 h-9 w-full max-w-3xl rounded-lg bg-gray-200" />
+                <div className="mb-6 h-9 w-4/5 max-w-2xl rounded-lg bg-gray-200" />
 
-            {/* Main image */}
-            <div className="skeleton w-full h-56 sm:h-96 mt-5 !rounded-xl" />
-            <div className="skeleton h-3 w-1/2 mt-3" />
-
-            {/* Paragraphs */}
-            {Array.from({ length: 3 }).map((_, p) => (
-                <div key={p} className="mt-6 space-y-3">
-                    <div className="skeleton h-4 w-full" />
-                    <div className="skeleton h-4 w-full" />
-                    <div className="skeleton h-4 w-11/12" />
-                    <div className="skeleton h-4 w-4/5" />
+                {/* Date and author */}
+                <div className="mb-7 flex flex-wrap items-center gap-4">
+                    <div className="h-4 w-28 rounded bg-gray-200" />
+                    <div className="h-4 w-32 rounded bg-gray-200" />
                 </div>
-            ))}
-        </div>
-    );
-};
 
-export default DetailsLoading;
+                {/* Main news image */}
+                <div className="mb-8 aspect-video w-full rounded-2xl bg-gray-200" />
+
+                {/* Article description */}
+                <div className="space-y-4">
+                    <div className="h-5 w-full rounded bg-gray-200" />
+                    <div className="h-5 w-full rounded bg-gray-200" />
+                    <div className="h-5 w-11/12 rounded bg-gray-200" />
+                    <div className="h-5 w-full rounded bg-gray-200" />
+                    <div className="h-5 w-4/5 rounded bg-gray-200" />
+                </div>
+
+                {/* More article content */}
+                <div className="mt-8 space-y-4">
+                    <div className="h-5 w-full rounded bg-gray-200" />
+                    <div className="h-5 w-11/12 rounded bg-gray-200" />
+                    <div className="h-5 w-3/4 rounded bg-gray-200" />
+                </div>
+            </div>
+        </main>
+    );
+}

@@ -26,11 +26,20 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
         `https://news-api-v2.vercel.app/api/category/${slug}`
     );
 
-    // Empty list if the API failed
-    const NewsData: CategoryNews[] = data?.data ?? [];
-
-    if (!NewsData) {
+    // No data at all (wrong slug or API failure) -> 404 page
+    if (!data?.data) {
         notFound();
+    }
+
+    const NewsData: CategoryNews[] = data.data;
+
+    // Valid category but no stories yet
+    if (NewsData.length === 0) {
+        return (
+            <div className="mx-auto max-w-7xl px-1 py-20 text-center text-gray-500 sm:px-5">
+                এই ক্যাটাগরিতে এখন কোনো খবর নেই।
+            </div>
+        );
     }
 
     // Format the date on the server so server and client render the same text
@@ -44,7 +53,7 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
     }));
 
     return (
-        <div className="max-w-7xl mx-auto px-1 pb-10 sm:px-5 sm:pb-16">
+        <div className="max-w-7xl mx-auto px-1 pt-6 pb-10 sm:px-5 sm:pt-8 sm:pb-16">
             <CategoryGrid items={items} />
         </div>
     );

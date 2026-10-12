@@ -56,7 +56,9 @@ const NewsSection = async () => {
     );
 
     const NewsData = data.data.filter(
-        (n) => !excludeIds.includes(n.curationId)
+        (n) =>
+            !excludeIds.includes(n.curationId) &&
+            n.title.trim() !== "ভারত"
     );
 
     return (
@@ -88,7 +90,11 @@ const NewsSection = async () => {
                 }
 
                 return (
-                    <section key={n.curationId}>
+                    <section
+                        key={n.curationId}
+                        id={n.title.trim() === "নির্বাচিত খবর" ? "selected-news" : undefined}
+                        className="scroll-mt-24"
+                    >
 
                         {/* Section header */}
                         <div className="flex items-center gap-3 sm:gap-4">

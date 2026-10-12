@@ -30,17 +30,18 @@ const CategoryGrid = ({ items }: { items: GridItem[] }) => {
                     <Link
                         href={`/details/${news.id}`}
                         key={news.id}
-                        className="group relative flex h-auto flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-red-100 hover:shadow-2xl hover:shadow-red-100/60 sm:h-[460px] sm:rounded-3xl"
+                        className="group relative flex h-auto flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:border-red-100 hover:shadow-2xl hover:shadow-red-100/60 sm:rounded-xl"
                     >
 
-                        {/* Image */}
-                        <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100 sm:aspect-auto sm:h-48">
+                        {/* Image (shrink-0 keeps every card's image the same size) */}
+                        <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-gray-100 sm:aspect-auto sm:h-44">
                             {news.imageUrl && (
                                 <Image
                                     src={news.imageUrl}
                                     alt={news.imageAlt || news.title}
                                     width={600}
                                     height={600}
+                                    sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
                                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 />
                             )}
@@ -49,18 +50,20 @@ const CategoryGrid = ({ items }: { items: GridItem[] }) => {
                         </div>
 
                         {/* Content */}
-                        <div className="flex flex-1 flex-col gap-2 p-2.5 sm:gap-3 sm:p-5">
+                        <div className="flex flex-1 flex-col gap-2 p-3 sm:gap-2.5">
 
-                            <h1 className="line-clamp-3 text-[13px] font-extrabold leading-6 text-gray-900 transition-colors duration-300 group-hover:text-red-600 sm:line-clamp-2 sm:text-base sm:leading-snug">
+                            <h3 className="line-clamp-3 text-[13px] font-extrabold leading-6 text-gray-900 transition-colors duration-300 group-hover:text-red-600 sm:line-clamp-2 sm:text-base sm:leading-snug">
                                 {news.title}
-                            </h1>
+                            </h3>
 
-                            <p className="hidden line-clamp-4 text-sm leading-7 text-gray-500 sm:block">
-                                {news.description}
-                            </p>
+                            <div className="hidden sm:block">
+                                <p className="line-clamp-4 text-sm leading-6 text-gray-500">
+                                    {news.description}
+                                </p>
+                            </div>
 
                             {/* Footer */}
-                            <div className="mt-auto flex items-center justify-between gap-1 border-t border-gray-100 pt-2 sm:pt-4">
+                            <div className="mt-auto flex items-center justify-between gap-1 border-t border-gray-100 pt-2 sm:pt-3">
                                 <span className="text-[10px] text-gray-400 sm:text-xs">
                                     {news.dateLabel}
                                 </span>

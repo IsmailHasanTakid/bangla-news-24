@@ -58,3 +58,7 @@
 .skeleton-line {
     animation: line-pulse 1.8s ease-in-out infinite;
 }
+
+html {
+    scroll-behavior: smooth;
+}

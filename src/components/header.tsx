@@ -1,60 +1,87 @@
 import Image from "next/image";
-import React from "react";
 import Link from "next/link";
 import SignInUp from "./SignInUp";
 
 const Header = () => {
     return (
-        <div className="relative">
-            <div className="max-w-5xl mx-auto px-3 sm:px-5 py-4 sm:py-6">
-                <div className="flex items-center justify-between gap-3">
-                    {/* Logo and Website Info */}
-                    <div className="flex items-center gap-2.5 sm:gap-4 min-w-0">
-                        <Link
-                            href="/"
-                            className="flex items-center justify-center shrink-0 w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-white shadow-sm border border-gray-100"
-                        >
-                            <Image
-                                className="w-8 h-8 sm:w-11 sm:h-11 object-contain"
-                                height={50}
-                                width={50}
-                                src="/logo.webp"
-                                alt="Bangla News 24 Logo"
-                            />
-                        </Link>
+        <header className="relative isolate overflow-hidden bg-gradient-to-b from-[#0b0d14] via-[#0d1018] to-[#12090c]">
+            {/* Ambient Mesh Glow */}
+            <div className="pointer-events-none absolute -left-28 -top-32 -z-10 h-72 w-72 rounded-full bg-red-600/30 blur-3xl" />
+            <div className="pointer-events-none absolute left-1/3 -top-28 -z-10 h-56 w-56 rounded-full bg-rose-500/15 blur-3xl" />
+            <div className="pointer-events-none absolute -right-24 -top-28 -z-10 h-72 w-72 rounded-full bg-orange-500/25 blur-3xl" />
 
-                        <Link href="/" className="group min-w-0">
-                            <div className="flex items-baseline gap-1.5 sm:gap-2 flex-wrap">
-                                <h1 className="text-lg sm:text-xl font-black tracking-tight text-gray-950 md:text-2xl">
-                                    Barta
-                                    <span className="ml-0.5 bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
-                                        24
+            {/* Fine grid texture */}
+            <div className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:28px_28px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
+
+            <div className="mx-auto max-w-7xl px-3 py-2 sm:px-6 sm:py-2.5 lg:px-8">
+                {/* Glass Panel */}
+                <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-2 shadow-[0_10px_40px_-10px_rgba(239,68,68,0.35),0_1px_0_0_rgba(255,255,255,0.12)_inset] ring-1 ring-white/[0.04] backdrop-blur-2xl backdrop-saturate-150 sm:px-5 sm:py-2.5">
+                    {/* Specular highlight */}
+                    <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/[0.08] to-transparent" />
+                    <div className="pointer-events-none absolute -left-10 top-0 h-full w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+
+                    <div className="relative flex items-center justify-between gap-4">
+                        {/* Logo and Website Info */}
+                        <Link href="/" className="group flex min-w-0 items-center gap-3 sm:gap-4">
+                            {/* Logo tile with gradient ring */}
+                            <div className="relative shrink-0">
+                                <div className="absolute -inset-1 rounded-[18px] bg-gradient-to-br from-red-500 via-rose-500 to-orange-400 opacity-50 blur-md transition-all duration-500 group-hover:opacity-90 group-hover:blur-lg" />
+                                <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-red-500 via-red-500 to-orange-400 p-[1.5px] shadow-[0_8px_24px_-6px_rgba(239,68,68,0.6)] transition-all duration-500 group-hover:-translate-y-0.5 group-hover:rotate-[-3deg] sm:h-14 sm:w-14">
+                                    <div className="flex h-full w-full items-center justify-center rounded-[14px] bg-[#0d1018]/90 backdrop-blur-xl sm:rounded-[15px]">
+                                        <Image
+                                            src="/logo.webp"
+                                            alt="Barta24 Logo"
+                                            width={56}
+                                            height={56}
+                                            priority
+                                            className="h-8 w-8 object-contain drop-shadow-[0_2px_8px_rgba(239,68,68,0.5)] transition-transform duration-500 group-hover:scale-110 sm:h-10 sm:w-10"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="min-w-0">
+                                <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                                    <h1 className="text-xl font-black tracking-tight text-white sm:text-2xl md:text-3xl">
+                                        Barta
+                                        <span className="bg-gradient-to-r from-red-400 via-red-500 to-orange-400 bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(239,68,68,0.55)]">
+                                            24
+                                        </span>
+                                    </h1>
+
+                                    {/* Glass pill badge */}
+                                    <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.16em] text-slate-300 shadow-[0_1px_0_rgba(255,255,255,0.1)_inset] backdrop-blur-md sm:text-[10px] sm:tracking-[0.2em]">
+                                        <span className="relative flex h-1.5 w-1.5">
+                                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-60" />
+                                            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-gradient-to-br from-red-500 to-orange-400" />
+                                        </span>
+                                        With Takid
                                     </span>
-                                </h1>
+                                </div>
 
-                                <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-gray-400 md:text-xs">
-                                    With Takid
-                                </span>
-                            </div>
+                                <div className="mt-1 flex items-center gap-2">
+                                    <span className="h-[2px] w-5 shrink-0 rounded-full bg-gradient-to-r from-red-500 to-orange-400 shadow-[0_0_8px_rgba(239,68,68,0.8)] transition-all duration-500 group-hover:w-9 sm:w-7" />
 
-                            <div className="mt-0.5 sm:mt-1 flex items-center gap-1.5 sm:gap-2">
-                                <span className="h-px w-3 sm:w-5 bg-red-500 shrink-0" />
-                                <p className="text-[10px] sm:text-[11px] font-medium tracking-wide text-gray-500 md:text-xs truncate">
-                                    খবরের সাথে, সবসময়
-                                </p>
+                                    <p className="truncate text-[11px] font-medium tracking-wide text-slate-400 sm:text-xs">
+                                        খবরের সাথে, সবসময়
+                                    </p>
+                                </div>
                             </div>
                         </Link>
-                    </div>
 
-                    {/* Sign in / Sign up */}
-                    <div className="shrink-0 flex items-center">
-                        <SignInUp />
+                        {/* Sign In / Sign Up */}
+                        <div className="flex shrink-0 items-center">
+                            <SignInUp />
+                        </div>
                     </div>
                 </div>
-
-                <div className="mt-4 sm:mt-7 border-b border-gray-200"></div>
             </div>
-        </div>
+
+            {/* Bottom Accent */}
+            <div className="relative h-[2px] w-full bg-gradient-to-r from-transparent via-red-500/80 to-transparent">
+                <div className="absolute inset-x-0 -top-px mx-auto h-[3px] w-1/2 bg-gradient-to-r from-transparent via-orange-400 to-transparent blur-[3px]" />
+            </div>
+        </header>
     );
 };
 
