@@ -69,7 +69,7 @@ const NewsCard = ({
             {/* Image */}
             <div
                 className={`relative w-full shrink-0 overflow-hidden bg-gray-100 ${isFeatured
-                    ? "aspect-[16/10] lg:aspect-auto lg:min-h-[340px] lg:w-3/5"
+                    ? "aspect-[16/10] lg:aspect-auto lg:min-h-[400px] lg:w-3/5"
                     : isWide
                         ? "aspect-[4/3] sm:aspect-auto sm:h-44 lg:h-auto lg:min-h-[200px] lg:w-2/5"
                         : "aspect-[4/3] sm:aspect-auto sm:h-44"
@@ -98,7 +98,7 @@ const NewsCard = ({
 
             {/* Content */}
             <div
-                className={`flex flex-1 flex-col gap-2 p-3 sm:gap-2.5 ${isFeatured ? "lg:p-6" : ""
+                className={`flex flex-1 flex-col gap-2 p-3 sm:gap-2.5 lg:gap-3 lg:p-4 ${isFeatured ? "lg:!p-7" : ""
                     }`}
             >
                 {isFeatured ? (
@@ -165,7 +165,7 @@ const NewsSectionGrid = ({ items, categoryHref }: NewsSectionGridProps) => {
 
     return (
         <>
-            <div className="mt-5 grid grid-cols-2 gap-3 sm:mt-6 sm:gap-5 lg:grid-cols-12 lg:gap-6">
+            <div className="mt-5 grid grid-cols-2 gap-3 sm:mt-6 sm:gap-5 lg:grid-cols-12 lg:gap-4">
                 {featured && (
                     <NewsCard
                         news={featured}

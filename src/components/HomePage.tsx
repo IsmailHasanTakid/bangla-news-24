@@ -72,7 +72,7 @@ const HomePage = async () => {
     }
 
     const FirstNews: NewsArticle = articles[0];
-    const OtherNews: NewsArticle[] = articles.slice(1, 5);
+    const OtherNews: NewsArticle[] = articles.slice(2, 6);
     const MostReads: MostReadItem[] = data2?.data ?? [];
 
     // Stories already shown in the 3-column block, so the Hero picks a different one

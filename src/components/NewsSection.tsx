@@ -65,7 +65,11 @@ const NewsSection = async () => {
         <div className="flex flex-col gap-10 sm:gap-14">
             {NewsData.map((n) => {
                 // Format the date on the server so server and client render the same text
-                const items = n.articles.map((news) => ({
+                const items = (
+                    n.title.trim() === "প্রধান খবর"
+                        ? n.articles.slice(1)
+                        : n.articles
+                ).map((news) => ({
                     id: news.id,
                     title: news.title,
                     description: news.description,

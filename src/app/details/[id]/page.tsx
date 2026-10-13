@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { getData } from "@/lib/getData";
 import { recordRead } from "@/lib/history";
+import NewsSpeaker from "@/components/news/NewsSpeaker";
 
 interface BodyItem {
     type: string;
@@ -45,7 +46,6 @@ interface DetailsPageProps {
 
 const DetailsPage = async ({ params }: DetailsPageProps) => {
 
-
     const session = await auth.api.getSession({ headers: await headers() });
     if (!session) {
         redirect("/signin");
@@ -53,12 +53,10 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
 
     const { id } = await params;
 
-
     const data = await getData<ArticleResponse>(
         `https://news-api-v2.vercel.app/api/article/${id}`
     );
     const detail = data?.data;
-
 
     // Fallback: if the article API has no data, find the news in the sections API
     if (!detail) {
@@ -74,7 +72,6 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
             notFound();
         }
 
-    
         await recordRead({
             userId: session.user.id,
             newsId: id,
@@ -87,6 +84,8 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
                 <h1 className="text-2xl leading-snug font-bold break-words sm:text-3xl">
                     {news.title}
                 </h1>
+
+                <NewsSpeaker title={news.title} body={news.description ?? ""} />
 
                 {news.imageUrl && (
                     <Image
@@ -105,7 +104,6 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
         );
     }
 
-
     const firstImage =
         detail.body?.find((b) => b.type === "image" && b.url)?.url ?? null;
 
@@ -122,6 +120,12 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
         })
         : "";
 
+    // শোনার জন্য লেখা: ছবি বাদ, subheading ও অনুচ্ছেদ থাকবে
+    const speechBody = (detail.body ?? [])
+        .filter((b) => b.type !== "image" && b.text)
+        .map((b) => b.text as string)
+        .join("\n");
+
     return (
         <div className="max-w-6xl mx-auto px-1 py-3 sm:p-5">
             <h1 className="text-2xl leading-snug font-bold break-words sm:text-3xl">
@@ -132,6 +136,8 @@ const DetailsPage = async ({ params }: DetailsPageProps) => {
                 {detail.byline?.[0] && <span>{detail.byline[0].name}</span>}
                 <span>{date}</span>
             </div>
+
+            <NewsSpeaker title={detail.title} body={speechBody} />
 
             {detail.body?.map((item, index) => {
                 if (item.type === "image" && item.url) {

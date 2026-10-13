@@ -36,6 +36,7 @@ const Navbar = async () => {
 
                     <div className="relative flex items-center gap-1 overflow-x-auto whitespace-nowrap px-2 py-1.5 sm:px-3 lg:justify-center [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                         <NavLink href="/">হোম</NavLink>
+                        <NavLink href="/weather">আবহাওয়া</NavLink>
 
                         {navData.map((category) => (
                             <NavLink
