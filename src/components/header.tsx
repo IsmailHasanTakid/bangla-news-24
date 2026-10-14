@@ -41,32 +41,29 @@ const Header = () => {
                             </div>
 
                             <div className="min-w-0">
-                                <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-                                    <h1 className="text-xl font-black tracking-tight text-white sm:text-2xl md:text-3xl">
-                                        Barta
-                                        <span className="bg-gradient-to-r from-red-400 via-red-500 to-orange-400 bg-clip-text text-transparent drop-shadow-[0_2px_12px_rgba(239,68,68,0.55)]">
-                                            24
-                                        </span>
-                                    </h1>
+                                <div className="flex items-center">
+                                    <div className="relative">
+                                        <span className="absolute -inset-1 rounded-lg bg-cyan-400/20 opacity-0 blur-md transition duration-500 group-hover:opacity-100" />
 
-                                    {/* Glass pill badge */}
-                                    <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.16em] text-slate-300 shadow-[0_1px_0_rgba(255,255,255,0.1)_inset] backdrop-blur-md sm:text-[10px] sm:tracking-[0.2em]">
-                                        <span className="relative flex h-1.5 w-1.5">
-                                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-60" />
-                                            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-gradient-to-br from-red-500 to-orange-400" />
+                                        <span className="relative text-xl font-black tracking-tight text-white sm:text-2xl">
+                                            <span className="block sm:inline">TAKID</span>
+                                            <span className="hidden text-cyan-400 sm:inline">-</span>
+                                            <span className="block text-cyan-400 sm:inline">BARTA</span>
                                         </span>
-                                        With Takid
-                                    </span>
+                                    </div>
                                 </div>
 
-                                <div className="mt-1 flex items-center gap-2">
-                                    <span className="h-[2px] w-5 shrink-0 rounded-full bg-gradient-to-r from-red-500 to-orange-400 shadow-[0_0_8px_rgba(239,68,68,0.8)] transition-all duration-500 group-hover:w-9 sm:w-7" />
+                                <div className="mt-1 hidden items-center gap-2 sm:flex">
+                                    <span className="h-[2px] w-7 shrink-0 rounded-full bg-gradient-to-r from-red-500 to-orange-400 shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
 
-                                    <p className="truncate text-[11px] font-medium tracking-wide text-slate-400 sm:text-xs">
+                                    <p className="text-xs font-medium tracking-wide text-slate-400">
                                         খবরের সাথে, সবসময়
                                     </p>
                                 </div>
                             </div>
+
+
+
                         </Link>
 
                         {/* Sign In / Sign Up */}
