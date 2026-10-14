@@ -151,48 +151,85 @@ const HomePage = async () => {
 
                 {/* ============ COLUMN 2 — MAIN NEWS ============ */}
 
+
+                {/* ============ COLUMN 2 — MAIN NEWS ============ */}
+
                 <div className={glassPanel}>
+                    {/* Mobile dropdown heading */}
+                    <details className="group/mainnews sm:hidden">
+                        <summary className="flex cursor-pointer list-none items-center justify-between gap-3 border-b border-slate-200/70 px-4 py-4 [&::-webkit-details-marker]:hidden">
+                            <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900">
+                                <span className="h-5 w-1 rounded-full bg-gradient-to-b from-red-500 to-orange-400" />
+                                প্রধান খবর
+                            </h2>
 
-                    <div className="border-b border-slate-200/70 px-4 py-4 sm:px-5 sm:py-5">
-                        <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900 sm:text-xl">
-                            <span className="h-5 w-1 rounded-full bg-gradient-to-b from-red-500 to-orange-400" />
-                            প্রধান খবর
-                        </h2>
+                            <div className="flex shrink-0 items-center gap-1.5 text-red-600">
+                                <span className="text-xs font-semibold">আরও দেখুন</span>
+
+                                <ChevronDown className="h-5 w-5 transition-transform duration-300 group-open/mainnews:rotate-180" />
+                            </div>
+                        </summary>
+
+                        <div>
+                            {OtherNews.map((news, i) => (
+                                <Link
+                                    href={`/details/${news.id}`}
+                                    key={news.id}
+                                    className="group relative block border-b border-slate-200/70 px-4 py-4 transition-colors duration-300 last:border-b-0 hover:bg-white/70"
+                                >
+                                    <div className="absolute bottom-0 left-0 top-0 w-[3px] origin-bottom scale-y-0 bg-gradient-to-b from-red-500 to-orange-400 transition-transform duration-300 group-hover:scale-y-100" />
+
+                                    <span className="text-xs font-bold text-red-600">
+                                        {news.category}
+                                    </span>
+
+                                    <h3 className="mt-2 line-clamp-3 text-[15px] font-semibold leading-7 text-slate-900 transition-colors duration-300 group-hover:text-red-600">
+                                        {news.title}
+                                    </h3>
+
+                                    <div className="mt-2 text-xs font-bold text-slate-400">
+                                        {String(i + 1).padStart(2, "0")}
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </details>
+
+                    {/* Tablet and desktop: original layout */}
+                    <div className="hidden sm:block">
+                        <div className="border-b border-slate-200/70 px-4 py-4 sm:px-5 sm:py-5">
+                            <h2 className="flex items-center gap-2 text-lg font-bold text-slate-900 sm:text-xl">
+                                <span className="h-5 w-1 rounded-full bg-gradient-to-b from-red-500 to-orange-400" />
+                                প্রধান খবর
+                            </h2>
+                        </div>
+
+                        <div>
+                            {OtherNews.map((news, i) => (
+                                <Link
+                                    href={`/details/${news.id}`}
+                                    key={news.id}
+                                    className="group relative block border-b border-slate-200/70 px-4 py-4 transition-colors duration-300 last:border-b-0 hover:bg-white/70 sm:px-5 sm:py-5"
+                                >
+                                    <div className="absolute bottom-0 left-0 top-0 w-[3px] origin-bottom scale-y-0 bg-gradient-to-b from-red-500 to-orange-400 transition-transform duration-300 group-hover:scale-y-100" />
+
+                                    <span className="text-xs font-bold text-red-600">
+                                        {news.category}
+                                    </span>
+
+                                    <h3 className="mt-2 line-clamp-3 text-[15px] font-semibold leading-7 text-slate-900 transition-colors duration-300 group-hover:text-red-600 sm:text-base">
+                                        {news.title}
+                                    </h3>
+
+                                    <div className="mt-2 text-xs font-bold text-slate-400 sm:mt-3">
+                                        {String(i + 1).padStart(2, "0")}
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
                     </div>
-
-                    {/* News list */}
-
-                    <div>
-
-                        {OtherNews.map((news, i) => (
-                            <Link
-                                href={`/details/${news.id}`}
-                                key={news.id}
-                                className="group relative block border-b border-slate-200/70 px-4 py-4 transition-colors duration-300 last:border-b-0 hover:bg-white/70 sm:px-5 sm:py-5"
-                            >
-
-                                <div className="absolute bottom-0 left-0 top-0 w-[3px] origin-bottom scale-y-0 bg-gradient-to-b from-red-500 to-orange-400 transition-transform duration-300 group-hover:scale-y-100" />
-
-                                {/* Category */}
-
-                                <span className="text-xs font-bold text-red-600">
-                                    {news.category}
-                                </span>
-
-                                <h3 className="mt-2 line-clamp-3 text-[15px] font-semibold leading-7 text-slate-900 transition-colors duration-300 group-hover:text-red-600 sm:text-base">
-                                    {news.title}
-                                </h3>
-
-                                <div className="mt-2 text-xs font-bold text-slate-400 sm:mt-3">
-                                    {String(i + 1).padStart(2, "0")}
-                                </div>
-
-                            </Link>
-                        ))}
-
-                    </div>
-
                 </div>
+
 
 
                 {/* ============ COLUMN 3 — MOST READ (click to expand) ============ */}
@@ -208,7 +245,11 @@ const HomePage = async () => {
                                     সর্বাধিক পঠিত
                                 </h2>
 
-                                <ChevronDown className="h-5 w-5 shrink-0 text-red-500 transition-transform duration-300 group-open/mr:rotate-180" />
+                                <div className="flex shrink-0 items-center gap-1.5 text-red-600">
+                                    <span className="text-xs font-semibold">আরও দেখুন</span>
+
+                                    <ChevronDown className="h-5 w-5 transition-transform duration-300 group-open/mainnews:rotate-180" />
+                                </div>
                             </summary>
 
                             {/* Most read list (shows after click) */}

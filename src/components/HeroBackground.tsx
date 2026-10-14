@@ -37,7 +37,7 @@ export default function HeroBackground({ interval = 2000 }: { interval?: number 
                     priority={i === 0}
                     sizes="100vw"
 
-                    className={`object-cover scale-[1.02] blur-[2px] transition-opacity duration-1000 ${i === index ? "opacity-100" : "opacity-0"
+                    className={`object-cover  blur-[1.5px] transition-opacity duration-1000 ${i === index ? "opacity-100" : "opacity-0"
                         }`}
 
                 />

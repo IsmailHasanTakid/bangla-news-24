@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,6 +15,7 @@ interface GridItem {
 interface NewsSectionGridProps {
     items: GridItem[];
     categoryHref?: string;
+    horizontalScroll?: boolean;
 }
 
 const INITIAL_COUNT = 6;
@@ -21,21 +23,16 @@ const INITIAL_COUNT = 6;
 const buttonClass =
     "inline-block cursor-pointer rounded-full bg-gradient-to-r from-red-500 to-red-600 px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-red-200 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-red-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 active:translate-y-0 sm:px-8 sm:py-3";
 
-/*
- * Desktop uses a 12-column grid. These are the column spans for the cards that
- * come AFTER the featured card, depending on how many there are.
- * Every row always adds up to 12, so there are never empty gaps.
- *
- *   2 cards -> 6 + 6
- *   3 cards -> 4 + 4 + 4
- *   4 cards -> 3 + 3 + 3 + 3
- *   5 cards -> 4 + 4 + 4  /  6 + 6
- */
 const LG_SPANS: Record<number, string[]> = {
     1: ["lg:col-span-12"],
     2: ["lg:col-span-6", "lg:col-span-6"],
     3: ["lg:col-span-4", "lg:col-span-4", "lg:col-span-4"],
-    4: ["lg:col-span-3", "lg:col-span-3", "lg:col-span-3", "lg:col-span-3"],
+    4: [
+        "lg:col-span-3",
+        "lg:col-span-3",
+        "lg:col-span-3",
+        "lg:col-span-3",
+    ],
     5: [
         "lg:col-span-4",
         "lg:col-span-4",
@@ -66,7 +63,6 @@ const NewsCard = ({
             className={`group relative flex h-full flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-red-100 hover:shadow-2xl hover:shadow-red-100/60 sm:rounded-xl ${horizontal ? "lg:flex-row" : ""
                 } ${spanClass}`}
         >
-            {/* Image */}
             <div
                 className={`relative w-full shrink-0 overflow-hidden bg-gray-100 ${isFeatured
                     ? "aspect-[16/10] lg:aspect-auto lg:min-h-[400px] lg:w-3/5"
@@ -96,7 +92,6 @@ const NewsCard = ({
                 </span>
             </div>
 
-            {/* Content */}
             <div
                 className={`flex flex-1 flex-col gap-2 p-3 sm:gap-2.5 lg:gap-3 lg:p-4 ${isFeatured ? "lg:!p-7" : ""
                     }`}
@@ -111,7 +106,6 @@ const NewsCard = ({
                     </h3>
                 )}
 
-                {/* Wrapper shows/hides, <p> clamps (sm:block on the <p> would break line-clamp) */}
                 <div className="hidden sm:block">
                     <p
                         className={`text-sm text-gray-500 ${isFeatured
@@ -125,14 +119,15 @@ const NewsCard = ({
                     </p>
                 </div>
 
-                {/* Footer */}
                 <div className="mt-auto flex items-center justify-between gap-1 border-t border-gray-100 pt-2 sm:gap-2 sm:pt-3">
                     <span className="text-[10px] text-gray-400 sm:text-xs">
                         {news.dateLabel}
                     </span>
 
                     <span className="flex shrink-0 items-center gap-1 whitespace-nowrap text-sm font-semibold text-red-600">
-                        <span className="hidden sm:inline">বিস্তারিত পড়ুন</span>
+                        <span className="hidden sm:inline">
+                            বিস্তারিত পড়ুন
+                        </span>
                         <span className="transition-transform duration-300 group-hover:translate-x-1.5">
                             →
                         </span>
@@ -140,24 +135,24 @@ const NewsCard = ({
                 </div>
             </div>
 
-            {/* Bottom red line (grows on hover) */}
             <span className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-red-500 to-rose-700 transition-all duration-500 group-hover:w-full" />
         </Link>
     );
 };
 
-const NewsSectionGrid = ({ items, categoryHref }: NewsSectionGridProps) => {
+const NewsSectionGrid = ({
+    items,
+    categoryHref,
+    horizontalScroll = false,
+}: NewsSectionGridProps) => {
     const visible = items.slice(0, INITIAL_COUNT);
 
-    // With exactly 2 items a "featured" card makes no sense -> show two equal cards.
     const hasFeatured = visible.length !== 2;
     const featured = hasFeatured ? visible[0] : undefined;
     const rest = hasFeatured ? visible.slice(1) : visible;
 
     const lgSpans = LG_SPANS[rest.length] ?? [];
 
-    // Mobile / tablet is 2 columns: if the number of small cards is odd,
-    // the last one spans both columns so there is no empty slot.
     const mobileSpan = (index: number) =>
         rest.length % 2 === 1 && index === rest.length - 1
             ? "col-span-2"
@@ -165,30 +160,47 @@ const NewsSectionGrid = ({ items, categoryHref }: NewsSectionGridProps) => {
 
     return (
         <>
-            <div className="mt-5 grid grid-cols-2 gap-3 sm:mt-6 sm:gap-5 lg:grid-cols-12 lg:gap-4">
+            <div
+                className={`mt-5 grid gap-3 sm:mt-6 sm:gap-5 lg:grid-cols-12 lg:gap-4 ${horizontalScroll
+                    ? "grid-cols-[75%_75%_75%_75%_75%_75%] overflow-x-auto pb-3 sm:grid-cols-2"
+                    : "grid-cols-2"
+                    }`}
+            >
                 {featured && (
                     <NewsCard
                         news={featured}
                         variant="featured"
-                        spanClass="col-span-2 lg:col-span-12"
+                        spanClass={
+                            horizontalScroll
+                                ? "col-span-1 min-w-0 lg:col-span-12"
+                                : "col-span-2 lg:col-span-12"
+                        }
                     />
                 )}
 
                 {rest.map((news, index) => {
-                    const lgSpan = lgSpans[index] ?? "lg:col-span-4";
+                    const lgSpan =
+                        lgSpans[index] ?? "lg:col-span-4";
 
                     return (
                         <NewsCard
                             key={news.id}
                             news={news}
-                            variant={lgSpan === "lg:col-span-6" ? "wide" : "default"}
-                            spanClass={`${mobileSpan(index)} ${lgSpan}`}
+                            variant={
+                                lgSpan === "lg:col-span-6"
+                                    ? "wide"
+                                    : "default"
+                            }
+                            spanClass={
+                                horizontalScroll
+                                    ? `col-span-1 min-w-0 ${lgSpan}`
+                                    : `${mobileSpan(index)} ${lgSpan}`
+                            }
                         />
                     );
                 })}
             </div>
 
-            {/* Link to the category page (only when the section has one) */}
             {categoryHref && (
                 <div className="mt-6 flex justify-center sm:mt-8">
                     <Link href={categoryHref} className={buttonClass}>

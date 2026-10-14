@@ -86,7 +86,7 @@ const Hero = async ({ skipIds }: HeroProps) => {
 
     return (
         // মোবাইলে min-h দেওয়া হয়েছে যাতে লেখাগুলো স্ক্রিনের মাঝখানে সুন্দরভাবে বসে
-        <section className="relative isolate mb-5 flex min-h-[85svh] items-center justify-center overflow-hidden px-5 pb-12 pt-24 sm:min-h-0 sm:px-4 sm:pb-10 sm:pt-20 lg:pb-14 lg:pt-24">
+        <section className="relative isolate mb-5 flex min-h-[60svh] items-center justify-center overflow-hidden px-5 pb-12 pt-24 sm:min-h-0 sm:px-4 sm:pb-10 sm:pt-20 lg:pb-14 lg:pt-24">
             <style>{`
                 @keyframes hero-rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
                 .hero-rise { opacity: 0; animation: hero-rise .8s cubic-bezier(.2,.7,.2,1) forwards; }

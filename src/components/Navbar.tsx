@@ -34,19 +34,29 @@ const Navbar = async () => {
                     <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
                     <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/[0.06] to-transparent" />
 
-                    <div className="relative flex items-center gap-1 overflow-x-auto whitespace-nowrap px-2 py-1.5 sm:px-3 lg:justify-center [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                        <NavLink href="/">হোম</NavLink>
-                        <NavLink href="/weather">আবহাওয়া</NavLink>
 
-                        {navData.map((category) => (
-                            <NavLink
-                                key={category.slug}
-                                href={`/category/${category.slug}`}
-                            >
-                                {category.title}
-                            </NavLink>
-                        ))}
+                    <div className="relative">
+                        <div
+                            className="flex items-center gap-1 overflow-x-auto whitespace-nowrap px-2 py-1.5 sm:px-3 lg:justify-center [scrollbar-width:thin] [scrollbar-color:#22d3ee_transparent] [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-cyan-400 [&::-webkit-scrollbar-track]:bg-white/10"
+                        >
+                            <NavLink href="/">হোম</NavLink>
+                            <NavLink href="/weather">আবহাওয়া</NavLink>
+
+                            {navData.map((category) => (
+                                <NavLink
+                                    key={category.slug}
+                                    href={`/category/${category.slug}`}
+                                >
+                                    {category.title}
+                                </NavLink>
+                            ))}
+                        </div>
                     </div>
+
+
+
+
+
                 </div>
             </div>
 
