@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { emailOTP } from "better-auth/plugins";
 import { MongoClient } from "mongodb";
+import { APIError } from "better-auth/api";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
 import { Resend } from "resend";
 
@@ -9,18 +10,24 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const client = new MongoClient(process.env.MONGODB_URL as string);
 export const db = client.db("bangla-news-24");
 
-
-
 export const auth = betterAuth({
+
     baseURL: process.env.BETTER_AUTH_URL,
 
     database: mongodbAdapter(db, {
         client,
     }),
 
+    account: {
+        accountLinking: {
+            enabled: true,
+            trustedProviders: ["google", "github", "facebook"],
+            allowDifferentEmails: true,
+        },
+    },
+
     emailAndPassword: {
-        enabled: true,
-        requireEmailVerification: true,
+        enabled: false,
     },
 
     socialProviders: {
@@ -38,15 +45,12 @@ export const auth = betterAuth({
         },
     },
 
-
     emailVerification: {
         autoSignInAfterVerification: true,
     },
 
     plugins: [
         emailOTP({
-            overrideDefaultEmailVerification: true,
-            sendVerificationOnSignUp: true,
             otpLength: 6,
             expiresIn: 300,
 
@@ -57,6 +61,7 @@ export const auth = betterAuth({
                         : "Your sign in code";
 
                 const { error } = await resend.emails.send({
+
                     from: "Bangla News 24 <onboarding@resend.dev>",
                     to: email,
                     subject,
@@ -70,7 +75,10 @@ export const auth = betterAuth({
                 });
 
                 if (error) {
-                    return;
+                    console.error("Resend error:", error);
+                    throw new APIError("INTERNAL_SERVER_ERROR", {
+                        message: "ইমেইলে কোড পাঠানো যায়নি, একটু পরে আবার চেষ্টা করুন",
+                    });
                 }
             },
         }),

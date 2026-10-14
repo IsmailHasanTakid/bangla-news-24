@@ -40,7 +40,11 @@ const excludeIds: string[] = [
     "urn:bbc:tipo:list:0ad2eb5d-7a0e-4c74-b8b4-de3de9bc5137",
 ];
 
-const Hero = async () => {
+interface HeroProps {
+    skipIds: string[];
+}
+
+const Hero = async ({ skipIds }: HeroProps) => {
     const [sectionsData, categoriesData] = await Promise.all([
         getData<ApiResponse>("https://news-api-v2.vercel.app/api/news/sections"),
         getData<CategoryResponse>("https://news-api-v2.vercel.app/api/categories"),
@@ -54,7 +58,12 @@ const Hero = async () => {
     const featured =
         sections
             .flatMap((s) => s.articles)
-            .find((a) => a.imageUrl && a.title) ?? null;
+            .find(
+                (a) =>
+                    a.imageUrl &&
+                    a.title &&
+                    !skipIds.includes(a.id)
+            ) ?? null;
 
     // Trending: first headline of each other section (gives variety)
     const trending = sections
