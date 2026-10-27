@@ -168,7 +168,7 @@ export default async function WeatherPage({
 
 function Stat({ label, value }: { label: string; value: string }) {
     return (
-        <div className="rounded-lg bg-gray-100 p-3 dark:bg-gray-800">
+        <div className="rounded-lg bg-gray-100 p-3 text-gray-900">
             <p className="text-xs text-gray-500">{label}</p>
             <p className="text-lg font-medium">{value}</p>
         </div>

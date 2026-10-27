@@ -36,7 +36,7 @@ const BrandMark = () => (
 
 const AuthShell = ({ children }: { children: React.ReactNode }) => {
     return (
-        <main className="relative isolate flex w-full items-center justify-center overflow-hidden bg-[#06070b] px-3 py-6 sm:px-6 sm:py-10 lg:min-h-[calc(100vh-150px)]">
+        <main className="relative isolate flex w-full items-center justify-center overflow-hidden bg-[#06070b] px-3 py-3 sm:px-6 sm:py-10 lg:min-h-[calc(100vh-150px)]">
             {/* Ambient background */}
             <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_0%,rgba(239,68,68,0.14),transparent_55%),radial-gradient(ellipse_at_100%_100%,rgba(249,115,22,0.10),transparent_45%)]" />
             <div className="pointer-events-none absolute -left-40 top-1/4 -z-10 h-80 w-80 rounded-full bg-red-600/15 blur-[120px]" />
@@ -92,7 +92,7 @@ const AuthShell = ({ children }: { children: React.ReactNode }) => {
                         </aside>
 
                         {/* Right: form area */}
-                        <section className="relative px-5 py-6 sm:px-9 sm:py-8">
+                        <section className="relative px-4 py-4 sm:px-9 sm:py-8">
                             <div className="absolute left-1/2 top-0 h-px w-2/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-red-300/60 to-transparent" />
 
                             <div className="mb-6 flex items-center justify-between gap-3">
